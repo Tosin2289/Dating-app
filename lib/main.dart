@@ -15,9 +15,8 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Dating App',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData.dark()
+          .copyWith(useMaterial3: true, scaffoldBackgroundColor: Colors.black),
       home: const LoginScreen(),
     );
   }
