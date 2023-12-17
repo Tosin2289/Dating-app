@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../utils/image.dart';
+import '../register/register.dart';
 import '../widgets/text_field_widgets.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -86,7 +88,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(fontSize: 16, color: Colors.grey),
                   ),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.to(() => const RegisterScreen());
+                      },
                       child: const Text(
                         "Register here",
                         style: TextStyle(
