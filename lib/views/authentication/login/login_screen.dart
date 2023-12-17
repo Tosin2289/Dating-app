@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 10,
             ),
             const Text("Login to find find your best match",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           ],
         ),
       ),
