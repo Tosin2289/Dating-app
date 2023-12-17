@@ -48,131 +48,136 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
         body: SingleChildScrollView(
       child: Center(
-        child: Column(children: [
-          const SizedBox(
-            height: 100,
-          ),
-          const Text(
-            "Create Account",
-            style: TextStyle(
-              fontSize: 22,
-              color: Colors.grey,
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(children: [
+            const SizedBox(
+              height: 100,
             ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          const Text(
-            "To get started now",
-            style: TextStyle(
-                fontSize: 18, color: Colors.grey, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          GestureDetector(
-            onTap: () {},
-            child: const CircleAvatar(
-              radius: 80,
-              backgroundColor: Colors.black12,
-              backgroundImage: AssetImage("assets/profile.png"),
+            const Text(
+              "Create Account",
+              style: TextStyle(
+                  fontSize: 22,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
             ),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
+            const SizedBox(
+              height: 10,
+            ),
+            const Text(
+              "To get started now",
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.grey,
+              ),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            GestureDetector(
+              onTap: () {},
+              child: const CircleAvatar(
+                radius: 80,
+                backgroundColor: Colors.black12,
+                backgroundImage: AssetImage("assets/profile.png"),
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
 
-          ///Personal info
-          const Text(
-            "Personal Info:",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
+            ///Personal info
+            const Text(
+              "Personal Info",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          CustomTextField(
-            controller: nameController,
-            labelText: 'Name',
-            iconData: Icons.person_outlined,
-            isObscured: false,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          CustomTextField(
-            controller: emailController,
-            labelText: 'Email',
-            iconData: Icons.email_outlined,
-            isObscured: false,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          CustomTextField(
-            controller: passwordController,
-            labelText: 'Password',
-            iconData: Icons.lock_outlined,
-            isObscured: true,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          CustomTextField(
-            controller: ageController,
-            labelText: 'Age',
-            iconData: Icons.numbers,
-            isObscured: false,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          CustomTextField(
-            controller: phonenumberController,
-            labelText: 'Phone',
-            iconData: Icons.phone,
-            isObscured: false,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          CustomTextField(
-            controller: cityController,
-            labelText: 'City',
-            iconData: Icons.location_city,
-            isObscured: false,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          CustomTextField(
-            controller: countryController,
-            labelText: 'Country',
-            iconData: Icons.location_city_outlined,
-            isObscured: false,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          CustomTextField(
-            controller: profileheadingController,
-            labelText: 'Profile Heading',
-            iconData: Icons.text_fields,
-            isObscured: false,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          CustomTextField(
-            controller: lookingForInPartnerController,
-            labelText: 'What are you looking for in a partner',
-            iconData: Icons.face,
-            isObscured: false,
-          ),
-        ]),
+            const SizedBox(
+              height: 10,
+            ),
+            CustomTextField(
+              controller: nameController,
+              labelText: 'Name',
+              iconData: Icons.person_outlined,
+              isObscured: false,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            CustomTextField(
+              controller: emailController,
+              labelText: 'Email',
+              iconData: Icons.email_outlined,
+              isObscured: false,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            CustomTextField(
+              controller: passwordController,
+              labelText: 'Password',
+              iconData: Icons.lock_outlined,
+              isObscured: true,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            CustomTextField(
+              controller: ageController,
+              labelText: 'Age',
+              iconData: Icons.numbers,
+              isObscured: false,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            CustomTextField(
+              controller: phonenumberController,
+              labelText: 'Phone',
+              iconData: Icons.phone,
+              isObscured: false,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            CustomTextField(
+              controller: cityController,
+              labelText: 'City',
+              iconData: Icons.location_city,
+              isObscured: false,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            CustomTextField(
+              controller: countryController,
+              labelText: 'Country',
+              iconData: Icons.location_city_outlined,
+              isObscured: false,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            CustomTextField(
+              controller: profileheadingController,
+              labelText: 'Profile Heading',
+              iconData: Icons.text_fields,
+              isObscured: false,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            CustomTextField(
+              controller: lookingForInPartnerController,
+              labelText: 'What are you looking for in a partner',
+              iconData: Icons.face,
+              isObscured: false,
+            ),
+          ]),
+        ),
       ),
     ));
   }
