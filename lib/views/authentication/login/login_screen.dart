@@ -98,17 +98,16 @@ class _LoginScreenState extends State<LoginScreen> {
                             color: Colors.white,
                             fontWeight: FontWeight.bold),
                       )),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  showProgressbar == true
-                      ? const CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.pink),
-                        )
-                      : const SizedBox()
                 ],
               ),
+              const SizedBox(
+                height: 16,
+              ),
+              showProgressbar == true
+                  ? const CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.pink),
+                    )
+                  : const SizedBox()
             ],
           ),
         ),
