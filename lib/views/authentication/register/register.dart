@@ -87,12 +87,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
 
             ///Personal info
-            const Text(
-              "Personal Info",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+            const Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                "Personal Info",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
             ),
             const SizedBox(
@@ -175,6 +178,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
               labelText: 'What are you looking for in a partner',
               iconData: Icons.face,
               isObscured: false,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Appearance ",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
             ),
           ]),
         ),
