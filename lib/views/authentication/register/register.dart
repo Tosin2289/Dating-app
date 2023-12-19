@@ -432,7 +432,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Get.back();
                       },
                       child: const Text(
-                        "Login here",
+                        "Login",
                         style: TextStyle(
                             fontSize: 16,
                             color: Colors.white,
