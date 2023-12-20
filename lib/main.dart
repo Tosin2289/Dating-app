@@ -1,3 +1,4 @@
+import 'package:dating_app/controllers/auth/authentication_controller.dart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -5,7 +6,8 @@ import 'views/authentication/login/login_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
+  Get.put(AuthenticationController());
+  (const MyApp());
 }
 
 class MyApp extends StatelessWidget {

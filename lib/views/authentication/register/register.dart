@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../controllers/auth/authentication_controller.dart.dart';
+
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
@@ -46,6 +48,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController religionController = TextEditingController();
   TextEditingController ethnicityController = TextEditingController();
   bool showProgressbar = false;
+  var authController = AuthenticationController.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,13 +81,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(
                 height: 16,
               ),
-              GestureDetector(
-                onTap: () {},
-                child: const CircleAvatar(
-                  radius: 80,
-                  backgroundColor: Colors.black12,
-                  backgroundImage: AssetImage("assets/profile.png"),
-                ),
+              Stack(
+                children: [
+                  const CircleAvatar(
+                    radius: 80,
+                    backgroundColor: Colors.black12,
+                    backgroundImage: AssetImage("assets/profile.png"),
+                  ),
+                  Positioned(
+                    bottom: 20,
+                    right: 15,
+                    child: Container(
+                      height: 30,
+                      width: 30,
+                      decoration: const BoxDecoration(
+                          color: Colors.white, shape: BoxShape.circle),
+                      child: Center(
+                        child: IconButton(
+                            onPressed: () {
+                              authController.pickedImageFileFromGallery();
+                            },
+                            icon: const Icon(
+                              Icons.add_a_photo,
+                              color: Colors.black,
+                              size: 16,
+                            )),
+                      ),
+                    ),
+                  )
+                ],
               ),
               const SizedBox(
                 height: 30,

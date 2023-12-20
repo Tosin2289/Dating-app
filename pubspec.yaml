@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   get: 
   flutter_native_splash: ^2.2.19
+  image_picker: ^1.0.4
 
 dev_dependencies:
   flutter_test:
