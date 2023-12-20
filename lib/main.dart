@@ -6,7 +6,7 @@ import 'views/authentication/login/login_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  Get.put(AuthenticationController());
+
   (const MyApp());
 }
 

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dating_app/views/authentication/widgets/text_field_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +50,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController religionController = TextEditingController();
   TextEditingController ethnicityController = TextEditingController();
   bool showProgressbar = false;
-  var authController = AuthenticationController.instance;
+  var authController = Get.put(AuthenticationController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,11 +85,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               Stack(
                 children: [
-                  const CircleAvatar(
-                    radius: 80,
-                    backgroundColor: Colors.black12,
-                    backgroundImage: AssetImage("assets/profile.png"),
-                  ),
+                  authController.imageFile == null
+                      ? const CircleAvatar(
+                          radius: 80,
+                          backgroundColor: Colors.black12,
+                          backgroundImage: AssetImage("assets/profile.png"),
+                        )
+                      : CircleAvatar(
+                          radius: 80,
+                          backgroundColor: Colors.black12,
+                          backgroundImage:
+                              FileImage(File(authController.imageFile!.path)),
+                        ),
                   Positioned(
                     bottom: 20,
                     right: 15,
@@ -98,8 +107,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           color: Colors.white, shape: BoxShape.circle),
                       child: Center(
                         child: IconButton(
-                            onPressed: () {
-                              authController.pickedImageFileFromGallery();
+                            onPressed: () async {
+                              await authController.pickedImageFileFromGallery();
+                              // ignore: unused_element
+                              setState() {
+                                authController.imageFile;
+                              }
                             },
                             icon: const Icon(
                               Icons.add_a_photo,
