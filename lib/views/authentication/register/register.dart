@@ -50,7 +50,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController religionController = TextEditingController();
   TextEditingController ethnicityController = TextEditingController();
   bool showProgressbar = false;
-  var authController = Get.put(AuthenticationController());
+  var authController = AuthenticationController.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,10 +109,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: IconButton(
                             onPressed: () async {
                               await authController.pickedImageFileFromGallery();
-                              // ignore: unused_element
-                              setState() {
-                                authController.imageFile;
-                              }
+
+                              authController.imageFile;
+                              setState(() {});
                             },
                             icon: const Icon(
                               Icons.add_a_photo,
