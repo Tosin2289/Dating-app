@@ -39,10 +39,11 @@ class AuthenticationController extends GetxController {
     String email,
     String password,
     String name,
-    int age,
+    String age,
     String phoneNo,
     String city,
     String country,
+    String profileHeading,
     String lookingForInaPartner,
     String height,
     String weight,
@@ -68,10 +69,42 @@ class AuthenticationController extends GetxController {
       UserCredential credential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
       String urlOfDownloadedImage = await uploadImageToStorage(imageProfile);
+      final newUser = Person(
+        imageProfile: urlOfDownloadedImage,
+        email: email,
+        password: password,
+        name: name,
+        age: int.parse(age),
+        phoneNo: phoneNo,
+        city: city,
+        country: country,
+        profileHeading: profileHeading,
+        lookingForInaPartner: lookingForInaPartner,
+        publishedDateTime: DateTime.now().millisecondsSinceEpoch,
+        height: height,
+        weight: weight,
+        bodyType: bodyType,
+        drink: drink,
+        smaoke: smaoke,
+        maritalStatus: maritalStatus,
+        haveChildren: haveChildren,
+        noOfChildren: noOfChildren,
+        profession: profession,
+        employmentStatus: employmentStatus,
+        income: income,
+        livingSituation: livingSituation,
+        willingToRelocate: willingToRelocate,
+        relationshipLookingFor: relationshipLookingFor,
+        nationality: nationality,
+        education: education,
+        language: language,
+        religion: religion,
+        ethnicity: ethnicity,
+      );
       await FirebaseFirestore.instance
           .collection("Users")
           .doc(FirebaseAuth.instance.currentUser!.uid)
-          .set(Person().toMap());
+          .set(newUser.toMap());
       Get.snackbar("Hurry", "Your account has been created sucessfully",
           backgroundColor: Colors.pink, colorText: Colors.white);
       Get.to(const HomeScreen());

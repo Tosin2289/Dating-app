@@ -67,7 +67,7 @@ class Person {
     this.religion,
     this.ethnicity,
   });
-  Map<String, dynamic> toMap() {
+   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'imageProfile': imageProfile,
       'email': email,

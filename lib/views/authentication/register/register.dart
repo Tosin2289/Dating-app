@@ -207,7 +207,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               CustomTextField(
                 controller: profileheadingController,
-                labelText: 'Profile Heading',
+                labelText: "Profile Heading(Let's catch up over snacks)",
                 iconData: Icons.text_fields,
                 isObscured: false,
               ),
@@ -489,10 +489,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             emailController.text.trim(),
                             passwordController.text.trim(),
                             nameController.text.trim(),
-                            int.parse(ageController.text.trim()),
+                            ageController.text.trim(),
                             phonenumberController.text.trim(),
                             cityController.text.trim(),
                             countryController.text.trim(),
+                            profileheadingController.text.trim(),
                             lookingForInPartnerController.text.trim(),
                             heightController.text.trim(),
                             weightController.text.trim(),
@@ -525,7 +526,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     }
                   },
                   child: const Text(
-                    "Register",
+                    "Create Account",
                     style: TextStyle(fontSize: 20),
                   ),
                 ),
