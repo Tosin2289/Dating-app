@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/models/person.dart';
+import 'package:dating_app/views/authentication/login/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ import '../../views/Core/Home/home_screen.dart';
 class AuthenticationController extends GetxController {
   static AuthenticationController get instance => Get.find();
   late Rx<File?> pickedFile;
+  late Rx<User?> currentuser;
   File? get profileImage => pickedFile.value;
   XFile? imageFile;
   pickedImageFileFromGallery() async {
@@ -131,5 +133,21 @@ class AuthenticationController extends GetxController {
       Get.snackbar("Oh Snap", "Error occured while signning in",
           backgroundColor: Colors.red, colorText: Colors.white);
     }
+  }
+
+  checkIfUserIsLoggedIn(User? currentUser) {
+    if (currentUser == null) {
+      Get.to(const LoginScreen());
+    } else {
+      Get.to(const HomeScreen());
+    }
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    currentuser = Rx<User?>(FirebaseAuth.instance.currentUser);
+    currentuser.bindStream(FirebaseAuth.instance.authStateChanges());
+    ever(currentuser, checkIfUserIsLoggedIn);
   }
 }
