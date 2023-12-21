@@ -447,7 +447,77 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       foregroundColor: Colors.black,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10))),
-                  onPressed: () {},
+                  onPressed: () {
+                    if (authController.profileImage != null) {
+                      if (nameController.text.trim().isNotEmpty &&
+                          emailController.text.trim().isNotEmpty &&
+                          passwordController.text.trim().isNotEmpty &&
+                          ageController.text.trim().isNotEmpty &&
+                          phonenumberController.text.trim().isNotEmpty &&
+                          cityController.text.trim().isNotEmpty &&
+                          countryController.text.trim().isNotEmpty &&
+                          profileheadingController.text.trim().isNotEmpty &&
+                          lookingForInPartnerController.text
+                              .trim()
+                              .isNotEmpty &&
+                          heightController.text.trim().isNotEmpty &&
+                          weightController.text.trim().isNotEmpty &&
+                          bodytypeController.text.trim().isNotEmpty &&
+                          drinkController.text.trim().isNotEmpty &&
+                          smokeController.text.trim().isNotEmpty &&
+                          maritalstatusController.text.trim().isNotEmpty &&
+                          haveChildrenController.text.trim().isNotEmpty &&
+                          noOfChildrenController.text.trim().isNotEmpty &&
+                          professionController.text.trim().isNotEmpty &&
+                          employmentStatusController.text.trim().isNotEmpty &&
+                          incomeController.text.trim().isNotEmpty &&
+                          livingsituationController.text.trim().isNotEmpty &&
+                          relocateController.text.trim().isNotEmpty &&
+                          relationshiplookingforController.text
+                              .trim()
+                              .isNotEmpty &&
+                          nationalityController.text.trim().isNotEmpty &&
+                          educationController.text.trim().isNotEmpty &&
+                          languageController.text.trim().isNotEmpty &&
+                          religionController.text.trim().isNotEmpty &&
+                          ethnicityController.text.trim().isNotEmpty) {
+                        authController.createNewUserAccount(
+                            authController.profileImage!,
+                            emailController.text.trim(),
+                            passwordController.text.trim(),
+                            nameController.text.trim(),
+                            ageController.text.trim(),
+                            phonenumberController.text.trim(),
+                            cityController.text.trim(),
+                            countryController.text.trim(),
+                            lookingForInPartnerController.text.trim(),
+                            heightController.text.trim(),
+                            weightController.text.trim(),
+                            bodytypeController.text.trim(),
+                            drinkController.text.trim(),
+                            smokeController.text.trim(),
+                            maritalstatusController.text.trim(),
+                            haveChildrenController.text.trim(),
+                            noOfChildrenController.text.trim(),
+                            professionController.text.trim(),
+                            employmentStatusController.text.trim(),
+                            incomeController.text.trim(),
+                            livingsituationController.text.trim(),
+                            relocateController.text.trim(),
+                            relationshiplookingforController.text.trim(),
+                            nationalityController.text.trim(),
+                            educationController.text.trim(),
+                            languageController.text.trim(),
+                            religionController.text.trim(),
+                            ethnicityController.text.trim());
+                      } else {
+                        Get.snackbar("A Field is Empty",
+                            "Please make sure you fill in every field");
+                      }
+                    } else {
+                      Get.snackbar("Oh Snap", "Please pick image from gallery");
+                    }
+                  },
                   child: const Text(
                     "Register",
                     style: TextStyle(fontSize: 20),

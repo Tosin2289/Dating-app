@@ -79,7 +79,7 @@ class Person {
       'country': country,
       'profileHeading': profileHeading,
       'lookingForInaPartner': lookingForInaPartner,
-      'publishedDateTime': publishedDateTime,
+      'publishedDateTime': DateTime.now().millisecondsSinceEpoch,
       'height': height,
       'weight': weight,
       'bodyType': bodyType,
