@@ -116,4 +116,20 @@ class AuthenticationController extends GetxController {
           backgroundColor: Colors.red, colorText: Colors.white);
     }
   }
+
+  loginUser(String email, String password) async {
+    try {
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      Get.snackbar("Oh Snap", "Logged in succesfully",
+          backgroundColor: Colors.pink, colorText: Colors.white);
+      Get.to(const HomeScreen());
+    } on FirebaseAuthException catch (e) {
+      Get.snackbar("Oh Snap", "$e",
+          backgroundColor: Colors.red, colorText: Colors.white);
+    } catch (e) {
+      Get.snackbar("Oh Snap", "Error occured while signning in",
+          backgroundColor: Colors.red, colorText: Colors.white);
+    }
+  }
 }
