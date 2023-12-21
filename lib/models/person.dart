@@ -4,7 +4,7 @@ class Person {
   String? email;
   String? password;
   String? name;
-  String? age;
+  int? age;
   String? phoneNo;
   String? city;
   String? country;
@@ -108,7 +108,7 @@ class Person {
       email: map['email'] ?? '',
       password: map['password'] ?? '',
       name: map['name'] ?? '',
-      age: map['age'] ?? '',
+      age: map['age'] ?? 0,
       phoneNo: map['phoneNo'] ?? '',
       city: map['city'] ?? '',
       country: map['country'] ?? '',

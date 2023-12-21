@@ -447,8 +447,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       foregroundColor: Colors.black,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10))),
-                  onPressed: () {
-                    if (authController.profileImage != null) {
+                  onPressed: () async {
+                    if (authController.imageFile != null) {
                       if (nameController.text.trim().isNotEmpty &&
                           emailController.text.trim().isNotEmpty &&
                           passwordController.text.trim().isNotEmpty &&
@@ -481,12 +481,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           languageController.text.trim().isNotEmpty &&
                           religionController.text.trim().isNotEmpty &&
                           ethnicityController.text.trim().isNotEmpty) {
-                        authController.createNewUserAccount(
+                        setState(() {
+                          showProgressbar = true;
+                        });
+                        await authController.createNewUserAccount(
                             authController.profileImage!,
                             emailController.text.trim(),
                             passwordController.text.trim(),
                             nameController.text.trim(),
-                            ageController.text.trim(),
+                            int.parse(ageController.text.trim()),
                             phonenumberController.text.trim(),
                             cityController.text.trim(),
                             countryController.text.trim(),
@@ -510,6 +513,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             languageController.text.trim(),
                             religionController.text.trim(),
                             ethnicityController.text.trim());
+                        setState(() {
+                          showProgressbar = false;
+                        });
                       } else {
                         Get.snackbar("A Field is Empty",
                             "Please make sure you fill in every field");

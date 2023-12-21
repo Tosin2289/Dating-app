@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../views/Core/Home/home_screen.dart';
+
 class AuthenticationController extends GetxController {
   static AuthenticationController get instance => Get.find();
   late Rx<File?> pickedFile;
@@ -37,7 +39,7 @@ class AuthenticationController extends GetxController {
     String email,
     String password,
     String name,
-    String age,
+    int age,
     String phoneNo,
     String city,
     String country,
@@ -72,6 +74,7 @@ class AuthenticationController extends GetxController {
           .set(Person().toMap());
       Get.snackbar("Hurry", "Your account has been created sucessfully",
           backgroundColor: Colors.pink, colorText: Colors.white);
+      Get.to(const HomeScreen());
     } on FirebaseAuthException catch (e) {
       Get.snackbar("Oh Snap", "Error occured :$e",
           backgroundColor: Colors.red, colorText: Colors.white);
