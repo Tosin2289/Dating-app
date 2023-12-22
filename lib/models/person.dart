@@ -1,5 +1,6 @@
 class Person {
   //Personal info
+  String? uid;
   String? imageProfile;
   String? email;
   String? password;
@@ -36,6 +37,7 @@ class Person {
   String? religion;
   String? ethnicity;
   Person({
+    this.uid,
     this.imageProfile,
     this.email,
     this.password,
@@ -67,8 +69,9 @@ class Person {
     this.religion,
     this.ethnicity,
   });
-   Map<String, dynamic> toMap() {
+  Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'uid': uid,
       'imageProfile': imageProfile,
       'email': email,
       'password': password,
@@ -104,6 +107,7 @@ class Person {
 
   factory Person.fromMap(Map<String, dynamic> map) {
     return Person(
+      uid: map['uid'] ?? '',
       imageProfile: map['imageProfile'] ?? '',
       email: map['email'] ?? '',
       password: map['password'] ?? '',
