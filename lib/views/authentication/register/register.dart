@@ -516,6 +516,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ethnicityController.text.trim());
                         setState(() {
                           showProgressbar = false;
+                          authController.imageFile = null;
                         });
                       } else {
                         Get.snackbar("A Field is Empty",
