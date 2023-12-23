@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Person {
   //Personal info
   String? uid;
@@ -105,39 +107,40 @@ class Person {
     };
   }
 
-  factory Person.fromMap(Map<String, dynamic> map) {
+  factory Person.fromMap(DocumentSnapshot snapshot) {
+    var map = snapshot.data() as Map<String, dynamic>;
     return Person(
-      uid: map['uid'] ?? '',
-      imageProfile: map['imageProfile'] ?? '',
-      email: map['email'] ?? '',
-      password: map['password'] ?? '',
-      name: map['name'] ?? '',
+      uid: map['uid'],
+      imageProfile: map['imageProfile'],
+      email: map['email'],
+      password: map['password'],
+      name: map['name'],
       age: map['age'] ?? 0,
-      phoneNo: map['phoneNo'] ?? '',
-      city: map['city'] ?? '',
-      country: map['country'] ?? '',
-      profileHeading: map['profileHeading'] ?? '',
-      lookingForInaPartner: map['lookingForInaPartner'] ?? '',
-      publishedDateTime: map['publishedDateTime'] ?? '',
-      height: map['height'] ?? '',
-      weight: map['weight'] ?? '',
-      bodyType: map['bodyType'] ?? '',
-      drink: map['drink'] ?? '',
-      smaoke: map['smaoke'] ?? '',
-      maritalStatus: map['maritalStatus'] ?? '',
-      haveChildren: map['haveChildren'] ?? '',
-      noOfChildren: map['noOfChildren'] ?? '',
-      profession: map['profession'] ?? '',
-      employmentStatus: map['employmentStatus'] ?? '',
-      income: map['income'] ?? '',
-      livingSituation: map['livingSituation'] ?? '',
-      willingToRelocate: map['willingToRelocate'] ?? '',
-      relationshipLookingFor: map['relationshipLookingFor'] ?? '',
-      nationality: map['nationality'] ?? '',
-      education: map['education'] ?? '',
-      language: map['language'] ?? '',
-      religion: map['religion'] ?? '',
-      ethnicity: map['ethnicity'] ?? '',
+      phoneNo: map['phoneNo'],
+      city: map['city'],
+      country: map['country'],
+      profileHeading: map['profileHeading'],
+      lookingForInaPartner: map['lookingForInaPartner'],
+      publishedDateTime: map['publishedDateTime'],
+      height: map['height'],
+      weight: map['weight'],
+      bodyType: map['bodyType'],
+      drink: map['drink'],
+      smaoke: map['smaoke'],
+      maritalStatus: map['maritalStatus'],
+      haveChildren: map['haveChildren'],
+      noOfChildren: map['noOfChildren'],
+      profession: map['profession'],
+      employmentStatus: map['employmentStatus'],
+      income: map['income'],
+      livingSituation: map['livingSituation'],
+      willingToRelocate: map['willingToRelocate'],
+      relationshipLookingFor: map['relationshipLookingFor'],
+      nationality: map['nationality'],
+      education: map['education'],
+      language: map['language'],
+      religion: map['religion'],
+      ethnicity: map['ethnicity'],
     );
   }
 }

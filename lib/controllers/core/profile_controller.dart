@@ -11,18 +11,33 @@ class ProfileController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    usersProfileList.bindStream(FirebaseFirestore.instance
+    // usersProfileList.bindStream(FirebaseFirestore.instance
+    //     .collection('Users')
+    //     .where("uid", isNotEqualTo: FirebaseAuth.instance.currentUser!.uid)
+    //     .snapshots()
+    //     .map((QuerySnapshot queryDataSnapshot) {
+    //   List<Person> profileList = [];
+    //   for (var eachProfile in queryDataSnapshot.docs) {
+    //     profileList.add(Person.fromMap(eachProfile));
+    //   }
+    //   return profileList;
+    // }));
+    getAllProfileList();
+  }
+
+  Future<List<Person>> getAllProfileList() async {
+    List<Person> profileList = [];
+    await FirebaseFirestore.instance
         .collection('Users')
         .where("uid", isNotEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .snapshots()
         .map((QuerySnapshot queryDataSnapshot) {
-      List<Person> profileList = [];
       for (var eachProfile in queryDataSnapshot.docs) {
-        profileList.add(Person.fromMap(eachProfile as Map<String, dynamic>));
-        print(profileList);
-        print("Check this out man");
+        profileList.add(Person.fromMap(eachProfile));
       }
-      return profileList;
-    }));
+    });
+    print("Here");
+    print(profileList);
+    return profileList;
   }
 }
