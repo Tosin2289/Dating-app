@@ -13,36 +13,33 @@ class SwippingScreen extends StatefulWidget {
 
 class _SwippingScreenState extends State<SwippingScreen> {
   ProfileController profileController = Get.put(ProfileController());
+
   @override
   Widget build(BuildContext context) {
+    print("Over Here as well");
+    print(profileController.usersProfileList.length);
     return Scaffold(
-        body: Expanded(
-      child: Obx(
-        () => Flexible(
-          child: PageView.builder(
-            itemCount: profileController.allUserProfileList.length,
-            controller: PageController(initialPage: 0, viewportFraction: 1),
-            itemBuilder: (context, index) {
-              final eachProfileInfo =
-                  profileController.allUserProfileList[index];
+        body: Obx(
+      () => PageView.builder(
+        itemCount: profileController.usersProfileList.length,
+        controller: PageController(initialPage: 0, viewportFraction: 1),
+        itemBuilder: (context, index) {
+          final eachProfileInfo = profileController.usersProfileList[index];
 
-              return DecoratedBox(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image:
-                          NetworkImage(eachProfileInfo.imageProfile.toString()),
-                      fit: BoxFit.cover),
-                ),
-                child: Center(
-                    child: Text(eachProfileInfo.name.toString(),
-                        style:const TextStyle(
-                          color: Colors.white,
-                          fontSize: 30,
-                        ))),
-              );
-            },
-          ),
-        ),
+          return DecoratedBox(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: NetworkImage(eachProfileInfo.imageProfile.toString()),
+                  fit: BoxFit.cover),
+            ),
+            child: Center(
+                child: Text(eachProfileInfo.name.toString(),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                    ))),
+          );
+        },
       ),
     ));
   }
