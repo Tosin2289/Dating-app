@@ -143,7 +143,18 @@ class _SwippingScreenState extends State<SwippingScreen> {
                               ),
                             ],
                           ),
-                        )
+                        ),
+                        const SizedBox(
+                          height: 14,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                              onTap: () {},
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
