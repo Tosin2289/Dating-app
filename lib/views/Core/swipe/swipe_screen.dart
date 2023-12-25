@@ -56,102 +56,129 @@ class _SwippingScreenState extends State<SwippingScreen> {
                         GestureDetector(
                           onTap: () {},
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                eachProfileInfo.name.toString(),
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                '${eachProfileInfo.age}•${eachProfileInfo.city}',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  eachProfileInfo.name.toString(),
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                children: [
-                                  ElevatedButton(
-                                      onPressed: () {},
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.white30,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(16)),
-                                      ),
-                                      child: Text(
-                                        eachProfileInfo.profession.toString(),
-                                        style: const TextStyle(
-                                            color: Colors.white, fontSize: 14),
-                                      )),
-                                  const SizedBox(
-                                    width: 10,
+                                Text(
+                                  '${eachProfileInfo.age}•${eachProfileInfo.city}',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
                                   ),
-                                  ElevatedButton(
-                                      onPressed: () {},
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.white30,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(16)),
-                                      ),
-                                      child: Text(
-                                        eachProfileInfo.religion.toString(),
-                                        style: const TextStyle(
-                                            color: Colors.white, fontSize: 14),
-                                      )),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  ElevatedButton(
-                                      onPressed: () {},
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.white30,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(16)),
-                                      ),
-                                      child: Text(
-                                        eachProfileInfo.country.toString(),
-                                        style: const TextStyle(
-                                            color: Colors.white, fontSize: 14),
-                                      )),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  ElevatedButton(
-                                      onPressed: () {},
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.white30,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(16)),
-                                      ),
-                                      child: Text(
-                                        eachProfileInfo.ethnicity.toString(),
-                                        style: const TextStyle(
-                                            color: Colors.white, fontSize: 14),
-                                      )),
-                                ],
-                              ),
-                            ],
-                          ),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      height: 20,
+                                      child: ElevatedButton(
+                                          onPressed: () {},
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.white30,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(16)),
+                                          ),
+                                          child: Text(
+                                            eachProfileInfo.profession
+                                                .toString(),
+                                            style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 12),
+                                          )),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                      child: ElevatedButton(
+                                          onPressed: () {},
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.white30,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(16)),
+                                          ),
+                                          child: Text(
+                                            eachProfileInfo.religion.toString(),
+                                            style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 12),
+                                          )),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      height: 20,
+                                      child: ElevatedButton(
+                                          onPressed: () {},
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.white30,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(16)),
+                                          ),
+                                          child: Text(
+                                            eachProfileInfo.country.toString(),
+                                            style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 12),
+                                          )),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                      child: ElevatedButton(
+                                          onPressed: () {},
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.white30,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(16)),
+                                          ),
+                                          child: Text(
+                                            eachProfileInfo.ethnicity
+                                                .toString(),
+                                            style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 12),
+                                          )),
+                                    ),
+                                  ],
+                                ),
+                              ]),
                         ),
-                        const SizedBox(
-                          height: 14,
-                        ),
+                        const SizedBox(height: 10),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             GestureDetector(
                               onTap: () {},
+                              child: Image.asset("assets/star.png", width: 40),
+                            ),
+                            GestureDetector(
+                              onTap: () {},
+                              child: Image.asset("assets/chat.png", width: 60),
+                            ),
+                            GestureDetector(
+                              onTap: () {},
+                              child: Image.asset("assets/heart.png", width: 40),
                             ),
                           ],
                         ),

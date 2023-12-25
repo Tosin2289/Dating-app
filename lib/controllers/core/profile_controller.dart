@@ -12,17 +12,17 @@ class ProfileController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    usersProfileList.bindStream(FirebaseFirestore.instance
-        .collection('Users')
-        .where("uid", isNotEqualTo: FirebaseAuth.instance.currentUser!.uid)
-        .snapshots()
-        .map((QuerySnapshot queryDataSnapshot) {
-      List<Person> profileList = [];
-      for (var eachProfile in queryDataSnapshot.docs) {
-        profileList.add(Person.fromMap(eachProfile));
-      }
-      return profileList;
-    }));
+    // usersProfileList.bindStream(FirebaseFirestore.instance
+    //     .collection('Users')
+    //     .where("uid", isNotEqualTo: FirebaseAuth.instance.currentUser!.uid)
+    //     .snapshots()
+    //     .map((QuerySnapshot queryDataSnapshot) {
+    //   List<Person> profileList = [];
+    //   for (var eachProfile in queryDataSnapshot.docs) {
+    //     profileList.add(Person.fromMap(eachProfile));
+    //   }
+    //   return profileList;
+    // }));
     getAllProfileList();
   }
 
@@ -36,8 +36,7 @@ class ProfileController extends GetxController {
       final list = snapshot.docs
           .map((queryDataSnapshot) => Person.fromMap(queryDataSnapshot));
       usersProfileList.assignAll(list);
-      print("Over here");
-      print(usersProfileList.length);
+      usersProfileList.shuffle();
     } on FirebaseException catch (e) {
       throw e.code;
     } on FormatException catch (e) {
