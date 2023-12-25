@@ -46,6 +46,8 @@ dependencies:
   flutter_card_swiper: ^6.0.0
   appinio_swiper: ^2.0.3
   iconsax: ^0.0.8
+  flutter_image_slider: ^0.0.2
+  dot_navigation_bar: ^1.0.2
 
 
 dev_dependencies:
