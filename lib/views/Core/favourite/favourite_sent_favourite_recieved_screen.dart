@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
+import '../../../global.dart';
 
 class FavouriteSentFavouriteReceivedScreen extends StatefulWidget {
   const FavouriteSentFavouriteReceivedScreen({super.key});
@@ -10,6 +13,53 @@ class FavouriteSentFavouriteReceivedScreen extends StatefulWidget {
 
 class _FavouriteSentFavouriteReceivedScreenState
     extends State<FavouriteSentFavouriteReceivedScreen> {
+  bool isFavouriteSentClicked = true;
+  List<String> favoriteSentList = [];
+  List<String> favoriteReceviedList = [];
+  List favoriteList = [];
+  getFavouriteListKeys() async {
+    if (isFavouriteSentClicked) {
+      var favouritesSentDocument = await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(currentUserId.toString())
+          .collection("favouriteSent")
+          .get();
+      for (int i = 0; i < favouritesSentDocument.docs.length; i++) {
+        favoriteSentList.add(favouritesSentDocument.docs[i].id);
+      }
+      getKeysDataFromUserCollection(favoriteSentList);
+    } else {
+      var favouritesreceivedDocument = await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(currentUserId.toString())
+          .collection("favouriteReceived")
+          .get();
+      for (int i = 0; i < favouritesreceivedDocument.docs.length; i++) {
+        favoriteReceviedList.add(favouritesreceivedDocument.docs[i].id);
+      }
+      getKeysDataFromUserCollection(favoriteReceviedList);
+    }
+  }
+
+  getKeysDataFromUserCollection(List<String> keyList) async {
+    var allUserDocuments =
+        await FirebaseFirestore.instance.collection("Users").get();
+    for (int i = 0; i < allUserDocuments.docs.length; i++) {
+      for (int k = 0; k < keyList.length; k++) {
+        if (((allUserDocuments.docs[i].data() as dynamic)["uid"]) ==
+            keyList[k]) {
+          favoriteList.add(allUserDocuments.docs[i].data());
+        }
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getFavouriteListKeys();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
