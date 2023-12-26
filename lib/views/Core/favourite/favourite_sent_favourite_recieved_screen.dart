@@ -70,6 +70,11 @@ class _FavouriteSentFavouriteReceivedScreenState
           SizedBox(
             height: 50,
             child: TabBar(
+              onTap: (value) {
+                setState(() {
+                  isFavouriteSentClicked = !isFavouriteSentClicked;
+                });
+              },
               indicator: BoxDecoration(
                   borderRadius: BorderRadius.circular(10), color: Colors.pink),
               labelColor: Colors.white,
