@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:get/get.dart';
 
 import '../../../controllers/core/profile_controller.dart';
+import '../../../global.dart';
 
 class SwippingScreen extends StatefulWidget {
   const SwippingScreen({super.key});
@@ -13,6 +16,24 @@ class SwippingScreen extends StatefulWidget {
 
 class _SwippingScreenState extends State<SwippingScreen> {
   ProfileController profileController = Get.put(ProfileController());
+  String senderName = "";
+  readCurrentUserData() async {
+    await FirebaseFirestore.instance
+        .collection("Users")
+        .doc(currentUserId)
+        .get()
+        .then((value) {
+      setState(() {
+        senderName = value.data()!["name"].toString();
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    readCurrentUserData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +62,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
 
               return DecoratedBox(
                 decoration: BoxDecoration(
+                  color: Colors.grey[800],
                   borderRadius: BorderRadius.circular(15),
                   image: DecorationImage(
                       image:
@@ -169,7 +191,12 @@ class _SwippingScreenState extends State<SwippingScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                profileController
+                                    .favoriteSentAndFavouriteReceived(
+                                        eachProfileInfo.uid.toString(),
+                                        senderName);
+                              },
                               child: Image.asset("assets/star.png", width: 40),
                             ),
                             GestureDetector(

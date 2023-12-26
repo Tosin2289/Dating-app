@@ -52,11 +52,14 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
               return Column(
                 children: [
                   SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.4,
+                      height: MediaQuery.of(context).size.height * 0.5,
                       width: MediaQuery.of(context).size.width,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: CustomCarouselSlider(
+                          height: 150,
+                          subHeight: 50,
+                          width: 300,
                           autoplay: true,
                           showSubBackground: false,
                           showText: false,
