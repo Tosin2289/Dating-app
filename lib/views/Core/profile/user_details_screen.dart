@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_image_slider/carousel.dart';
+import 'package:flutter_custom_carousel_slider/flutter_custom_carousel_slider.dart';
 import 'package:get/get.dart';
 
 import '../../../controllers/core/user_details_controller.dart';
@@ -52,34 +52,40 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
               return Column(
                 children: [
                   SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.5,
+                      height: MediaQuery.of(context).size.height * 0.4,
                       width: MediaQuery.of(context).size.width,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                        child: Carousel(
-                          indicatorBarColor: Colors.white.withOpacity(0.3),
-                          autoScrollDuration: const Duration(seconds: 2),
-                          animationPageDuration:
-                              const Duration(milliseconds: 500),
-                          animationPageCurve: Curves.easeIn,
-                          indicatorBarHeight: 20,
-                          indicatorHeight: 10,
-                          indicatorWidth: 10,
-                          unActivatedIndicatorColor: Colors.grey,
-                          stopAtEnd: false,
-                          activateIndicatorColor: Colors.black,
-                          autoScroll: true,
+                        child: CustomCarouselSlider(
+                          autoplay: true,
+                          showSubBackground: false,
+                          showText: false,
                           items: [
-                            Image.network(userDetailsController.urlImage1.value,
-                                fit: BoxFit.cover),
-                            Image.network(userDetailsController.urlImage2.value,
-                                fit: BoxFit.cover),
-                            Image.network(userDetailsController.urlImage3.value,
-                                fit: BoxFit.cover),
-                            Image.network(userDetailsController.urlImage4.value,
-                                fit: BoxFit.cover),
-                            Image.network(userDetailsController.urlImage5.value,
-                                fit: BoxFit.cover),
+                            CarouselItem(
+                              image: NetworkImage(
+                                userDetailsController.urlImage1.value,
+                              ),
+                            ),
+                            CarouselItem(
+                              image: NetworkImage(
+                                userDetailsController.urlImage2.value,
+                              ),
+                            ),
+                            CarouselItem(
+                              image: NetworkImage(
+                                userDetailsController.urlImage3.value,
+                              ),
+                            ),
+                            CarouselItem(
+                              image: NetworkImage(
+                                userDetailsController.urlImage4.value,
+                              ),
+                            ),
+                            CarouselItem(
+                              image: NetworkImage(
+                                userDetailsController.urlImage5.value,
+                              ),
+                            ),
                           ],
                         ),
                       )),
