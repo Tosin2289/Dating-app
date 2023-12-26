@@ -62,11 +62,45 @@ class _FavouriteSentFavouriteReceivedScreenState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-          child: Text(
-        "Favourite sent favourite received Screen",
-        style: TextStyle(fontSize: 30),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+          body: Column(
+        children: [
+          SizedBox(
+            height: 50,
+            child: TabBar(
+              indicator: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10), color: Colors.pink),
+              labelColor: Colors.white,
+              labelStyle: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold),
+              unselectedLabelColor: Colors.grey,
+              unselectedLabelStyle: const TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              ),
+              indicatorPadding: const EdgeInsets.all(1),
+              indicatorSize: TabBarIndicatorSize.tab,
+              indicatorColor: Colors.pink,
+              tabs: const [Text("Sent"), Text("Recived")],
+            ),
+          ),
+          const Expanded(
+            child: TabBarView(
+              children: [
+                Center(
+                  child: Text("Sent"),
+                ),
+                Center(
+                  child: Text("Recived"),
+                ),
+              ],
+            ),
+          )
+        ],
       )),
     );
   }
