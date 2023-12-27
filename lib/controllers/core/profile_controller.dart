@@ -15,17 +15,7 @@ class ProfileController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // usersProfileList.bindStream(FirebaseFirestore.instance
-    //     .collection('Users')
-    //     .where("uid", isNotEqualTo: FirebaseAuth.instance.currentUser!.uid)
-    //     .snapshots()
-    //     .map((QuerySnapshot queryDataSnapshot) {
-    //   List<Person> profileList = [];
-    //   for (var eachProfile in queryDataSnapshot.docs) {
-    //     profileList.add(Person.fromMap(eachProfile));
-    //   }
-    //   return profileList;
-    // }));
+
     getAllProfileList();
   }
 
@@ -94,6 +84,56 @@ class ProfileController extends GetxController {
       Get.snackbar(
         "Favourite",
         "Marked as Favourites",
+        colorText: Colors.white,
+        backgroundColor: Colors.pink,
+      );
+    }
+    update();
+  }
+
+  likeSentAndLikeReceived(String toUserId, String senderName) async {
+    var documnet = await FirebaseFirestore.instance
+        .collection("Users")
+        .doc(toUserId)
+        .collection("likeReceived")
+        .doc(currentUserId)
+        .get();
+    if (documnet.exists) {
+      await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(toUserId)
+          .collection("likeReceived")
+          .doc(currentUserId)
+          .delete();
+      await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(currentUserId)
+          .collection("likeSent")
+          .doc(toUserId)
+          .delete();
+      Get.snackbar(
+        "Like",
+        "Removed as Likes",
+        colorText: Colors.white,
+        backgroundColor: Colors.pink,
+      );
+    } else {
+      //add current user id to the like received
+      await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(toUserId)
+          .collection("likeReceived")
+          .doc(currentUserId)
+          .set({});
+      await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(currentUserId)
+          .collection("likeSent")
+          .doc(toUserId)
+          .set({});
+      Get.snackbar(
+        "Like",
+        "Added as Likes",
         colorText: Colors.white,
         backgroundColor: Colors.pink,
       );

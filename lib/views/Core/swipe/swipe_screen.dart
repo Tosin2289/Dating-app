@@ -204,7 +204,10 @@ class _SwippingScreenState extends State<SwippingScreen> {
                               child: Image.asset("assets/chat.png", width: 60),
                             ),
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                profileController.likeSentAndLikeReceived(
+                                    eachProfileInfo.uid.toString(), senderName);
+                              },
                               child: Image.asset("assets/heart.png", width: 40),
                             ),
                           ],
