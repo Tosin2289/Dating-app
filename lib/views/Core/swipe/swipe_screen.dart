@@ -53,7 +53,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
         ),
         body: Obx(
           () => CardSwiper(
-            cardsCount: profileController.usersProfileList.length,
+            cardsCount: profileController.usersProfileList.length ?? 2,
             numberOfCardsDisplayed: 3,
             backCardOffset: const Offset(40, 40),
             padding: const EdgeInsets.all(24.0),

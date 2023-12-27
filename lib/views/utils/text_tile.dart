@@ -25,12 +25,11 @@ class TextTile extends StatelessWidget {
         const SizedBox(
           width: 10,
         ),
-        SizedBox(
-          width: 170,
+        Expanded(
           child: Text(
             userDetailsController,
-            overflow: TextOverflow.ellipsis,
             style: const TextStyle(
+              overflow: TextOverflow.ellipsis,
               color: Colors.white,
               fontSize: 18,
             ),

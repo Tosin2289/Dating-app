@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
             screenIndex = value;
           });
         },
-        selectedItemColor: Colors.white,
+        selectedItemColor: Colors.pink,
         unselectedItemColor: Colors.grey.shade600,
         currentIndex: screenIndex,
         items: const [
