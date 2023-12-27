@@ -140,4 +140,35 @@ class ProfileController extends GetxController {
     }
     update();
   }
+
+  viewSentAndViewReceived(String toUserId, String senderName) async {
+    var documnet = await FirebaseFirestore.instance
+        .collection("Users")
+        .doc(toUserId)
+        .collection("viewReceived")
+        .doc(currentUserId)
+        .get();
+    if (documnet.exists) {
+      Get.snackbar(
+        "View",
+        "Already in view List",
+        colorText: Colors.white,
+        backgroundColor: Colors.pink,
+      );
+    } else {
+      await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(toUserId)
+          .collection("viewReceived")
+          .doc(currentUserId)
+          .set({});
+      await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(currentUserId)
+          .collection("viewSent")
+          .doc(toUserId)
+          .set({});
+    }
+    update();
+  }
 }

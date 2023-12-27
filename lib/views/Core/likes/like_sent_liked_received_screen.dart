@@ -113,7 +113,7 @@ class _LikeSentLikeReceivedScreenState
                 indicatorPadding: const EdgeInsets.all(1),
                 indicatorSize: TabBarIndicatorSize.tab,
                 indicatorColor: Colors.pink,
-                tabs: const [Text("Like Sent"), Text("Like Recived")],
+                tabs: const [Text("You liked"), Text("You were liked by")],
               ),
             ),
             Expanded(

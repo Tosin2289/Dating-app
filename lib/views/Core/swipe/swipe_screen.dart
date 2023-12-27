@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 import '../../../controllers/core/profile_controller.dart';
 import '../../../global.dart';
+import '../profile/user_details_screen.dart';
 
 class SwippingScreen extends StatefulWidget {
   const SwippingScreen({super.key});
@@ -76,7 +77,13 @@ class _SwippingScreenState extends State<SwippingScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            profileController.viewSentAndViewReceived(
+                                eachProfileInfo.uid.toString(), senderName);
+                            Get.to(UserDetailsScreen(
+                              userId: eachProfileInfo.uid,
+                            ));
+                          },
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
