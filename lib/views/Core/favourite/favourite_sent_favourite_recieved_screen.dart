@@ -29,7 +29,7 @@ class _FavouriteSentFavouriteReceivedScreenState
       for (int i = 0; i < favouritesSentDocument.docs.length; i++) {
         favoriteSentList.add(favouritesSentDocument.docs[i].id);
       }
-      print("favoriteSentList = $favoriteSentList");
+
       getKeysDataFromUserCollection(favoriteSentList);
     } else {
       var favouritesreceivedDocument = await FirebaseFirestore.instance
@@ -40,7 +40,7 @@ class _FavouriteSentFavouriteReceivedScreenState
       for (int i = 0; i < favouritesreceivedDocument.docs.length; i++) {
         favoriteReceviedList.add(favouritesreceivedDocument.docs[i].id);
       }
-      print("favoriteReceviedList = ${favoriteReceviedList.length}");
+
       getKeysDataFromUserCollection(favoriteReceviedList);
     }
   }
@@ -59,7 +59,6 @@ class _FavouriteSentFavouriteReceivedScreenState
     setState(() {
       favoriteList;
     });
-    print("favoriteList = $favoriteList");
   }
 
   @override
@@ -87,13 +86,14 @@ class _FavouriteSentFavouriteReceivedScreenState
                       favoriteList.clear();
                       favoriteList = [];
                       isFavouriteSentClicked = true;
+                      getFavouriteListKeys();
                     } else {
                       favoriteSentList.clear();
                       favoriteSentList = [];
-
                       favoriteList.clear();
                       favoriteList = [];
                       isFavouriteSentClicked = false;
+                      getFavouriteListKeys();
                     }
                   });
                 },
@@ -113,7 +113,7 @@ class _FavouriteSentFavouriteReceivedScreenState
                 indicatorPadding: const EdgeInsets.all(1),
                 indicatorSize: TabBarIndicatorSize.tab,
                 indicatorColor: Colors.pink,
-                tabs: const [Text("Sent"), Text("Recived")],
+                tabs: const [Text("Favourite Sent"), Text("Favourite Recived")],
               ),
             ),
             Expanded(
