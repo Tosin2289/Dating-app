@@ -4,8 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_carousel_slider/flutter_custom_carousel_slider.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 
 import '../../../controllers/core/user_details_controller.dart';
+import '../../../global.dart';
+import '../../personalisation/account_settings_screen.dart';
 import '../../utils/subheading_text.dart';
 import '../../utils/text_tile.dart';
 
@@ -33,16 +36,26 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
     return Scaffold(
         appBar: AppBar(
             centerTitle: true,
-            automaticallyImplyLeading: false,
+            automaticallyImplyLeading:
+                widget.userId == currentUserId ? false : true,
             actions: [
-              IconButton(
-                  onPressed: () {
-                    FirebaseAuth.instance.signOut();
-                  },
-                  icon: const Icon(Icons.logout))
+              widget.userId == currentUserId
+                  ? IconButton(
+                      onPressed: () {
+                        Get.to(const SettingsScreen());
+                      },
+                      icon: const Icon(Icons.settings_outlined))
+                  : const SizedBox(),
+              widget.userId == currentUserId
+                  ? IconButton(
+                      onPressed: () {
+                        FirebaseAuth.instance.signOut();
+                      },
+                      icon: const Icon(Icons.logout))
+                  : const SizedBox(),
             ],
             title: const Text(
-              "Profile Name",
+              "Account",
               style: TextStyle(color: Colors.white),
             )),
         body: SingleChildScrollView(

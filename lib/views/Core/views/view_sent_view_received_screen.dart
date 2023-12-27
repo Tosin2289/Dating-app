@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../../controllers/core/profile_controller.dart';
 import '../../../global.dart';
 import '../../utils/image.dart';
+import '../profile/user_details_screen.dart';
 
 class ViewSentViewReceivedScreen extends StatefulWidget {
   const ViewSentViewReceivedScreen({super.key});
@@ -15,6 +18,7 @@ class ViewSentViewReceivedScreen extends StatefulWidget {
 
 class _ViewSentViewReceivedScreenState
     extends State<ViewSentViewReceivedScreen> {
+  ProfileController profileController = Get.put(ProfileController());
   bool isViewSentClicked = true;
   List<String> viewSentList = [];
   List<String> viewReceviedList = [];
@@ -61,12 +65,27 @@ class _ViewSentViewReceivedScreenState
     });
   }
 
+  String senderName = "";
+  readCurrentUserData() async {
+    await FirebaseFirestore.instance
+        .collection("Users")
+        .doc(currentUserId)
+        .get()
+        .then((value) {
+      setState(() {
+        senderName = value.data()!["name"].toString();
+      });
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     getViewListKeys();
+    readCurrentUserData();
   }
 
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -79,23 +98,26 @@ class _ViewSentViewReceivedScreenState
               height: 50,
               child: TabBar(
                 onTap: (value) {
-                  setState(() {
-                    if (value == 0) {
-                      viewReceviedList.clear();
-                      viewReceviedList = [];
-                      viewList.clear();
-                      viewList = [];
-                      isViewSentClicked = true;
-                      getViewListKeys();
-                    } else {
-                      viewSentList.clear();
-                      viewSentList = [];
-                      viewList.clear();
-                      viewList = [];
-                      isViewSentClicked = false;
-                      getViewListKeys();
-                    }
-                  });
+                  setState(
+                    () {
+                      if (value == 0) {
+                        viewReceviedList.clear();
+                        viewReceviedList = [];
+                        viewList.clear();
+                        viewList = [];
+                        isViewSentClicked = true;
+                        getViewListKeys();
+                      } else {
+                        viewSentList.clear();
+                        viewSentList = [];
+                        viewList.clear();
+                        viewList = [];
+                        isViewSentClicked = false;
+                        getViewListKeys();
+                      }
+                      currentIndex = value;
+                    },
+                  );
                 },
                 indicator: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
@@ -119,154 +141,165 @@ class _ViewSentViewReceivedScreenState
             Expanded(
               child: TabBarView(
                 children: [
-                  viewList.isNotEmpty
-                      ? GridView.count(
-                          crossAxisCount: 2,
-                          padding: const EdgeInsets.all(2),
-                          children: List.generate(viewList.length, (index) {
-                            return ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: GridTile(
-                                  child: Padding(
-                                padding: const EdgeInsets.all(2),
-                                child: GestureDetector(
-                                  onTap: () {},
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Card(
-                                      color: Colors.grey.shade700,
-                                      child: DecoratedBox(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            image: DecorationImage(
-                                                image: NetworkImage(
-                                                    viewList[index]
-                                                        ["imageProfile"]),
-                                                fit: BoxFit.cover)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              const Expanded(
-                                                flex: 4,
-                                                child: SizedBox(),
-                                              ),
-                                              Expanded(
-                                                flex: 1,
-                                                child: Text(
-                                                    '${viewList[index]["name"]} • ${viewList[index]["age"]}',
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: const TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                              ),
-                                              Expanded(
-                                                flex: 1,
-                                                child: Text(
-                                                    '${viewList[index]["city"]} • ${viewList[index]["country"]}',
-                                                    style: const TextStyle(
+                  if (currentIndex == 0)
+                    viewList.isNotEmpty
+                        ? GridView.count(
+                            crossAxisCount: 2,
+                            padding: const EdgeInsets.all(2),
+                            children: List.generate(viewList.length, (index) {
+                              final eachProfileInfo =
+                                  profileController.usersProfileList[index];
+                              return ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: GridTile(
+                                    child: Padding(
+                                  padding: const EdgeInsets.all(2),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      profileController.viewSentAndViewReceived(
+                                          eachProfileInfo.uid.toString(),
+                                          senderName);
+                                      Get.to(UserDetailsScreen(
+                                        userId: eachProfileInfo.uid,
+                                      ));
+                                    },
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Card(
+                                        color: Colors.grey.shade700,
+                                        child: DecoratedBox(
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              image: DecorationImage(
+                                                  image: NetworkImage(
+                                                      viewList[index]
+                                                          ["imageProfile"]),
+                                                  fit: BoxFit.cover)),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const Expanded(
+                                                  flex: 4,
+                                                  child: SizedBox(),
+                                                ),
+                                                Expanded(
+                                                  flex: 1,
+                                                  child: Text(
+                                                      '${viewList[index]["name"]} • ${viewList[index]["age"]}',
                                                       overflow:
                                                           TextOverflow.ellipsis,
-                                                      color: Colors.white,
-                                                      fontSize: 16,
-                                                    )),
-                                              ),
-                                            ],
+                                                      style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                ),
+                                                Expanded(
+                                                  flex: 1,
+                                                  child: Text(
+                                                      '${viewList[index]["city"]} • ${viewList[index]["country"]}',
+                                                      style: const TextStyle(
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        color: Colors.white,
+                                                        fontSize: 16,
+                                                      )),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              )),
-                            );
-                          }),
-                        )
-                      : Center(
-                          child: Lottie.asset(DImages.findnot),
-                        ),
-                  viewList.isNotEmpty
-                      ? GridView.count(
-                          crossAxisCount: 2,
-                          padding: const EdgeInsets.all(2),
-                          children: List.generate(viewList.length, (index) {
-                            return ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: GridTile(
-                                  child: Padding(
-                                padding: const EdgeInsets.all(2),
-                                child: GestureDetector(
-                                  onTap: () {},
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Card(
-                                      color: Colors.grey.shade700,
-                                      child: DecoratedBox(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            image: DecorationImage(
-                                                image: NetworkImage(
-                                                    viewList[index]
-                                                        ["imageProfile"]),
-                                                fit: BoxFit.cover)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              const Expanded(
-                                                flex: 4,
-                                                child: SizedBox(),
-                                              ),
-                                              Expanded(
-                                                flex: 1,
-                                                child: Text(
-                                                    '${viewList[index]["name"]} • ${viewList[index]["age"]}',
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: const TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                              ),
-                                              Expanded(
-                                                flex: 1,
-                                                child: Text(
-                                                    '${viewList[index]["city"]} • ${viewList[index]["country"]}',
-                                                    style: const TextStyle(
+                                )),
+                              );
+                            }),
+                          )
+                        : Center(
+                            child: Lottie.asset(DImages.findnot),
+                          ),
+                  if (currentIndex == 1)
+                    viewList.isNotEmpty
+                        ? GridView.count(
+                            crossAxisCount: 2,
+                            padding: const EdgeInsets.all(2),
+                            children: List.generate(viewList.length, (index) {
+                              return ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: GridTile(
+                                    child: Padding(
+                                  padding: const EdgeInsets.all(2),
+                                  child: GestureDetector(
+                                    onTap: () {},
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Card(
+                                        color: Colors.grey.shade700,
+                                        child: DecoratedBox(
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              image: DecorationImage(
+                                                  image: NetworkImage(
+                                                      viewList[index]
+                                                          ["imageProfile"]),
+                                                  fit: BoxFit.cover)),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const Expanded(
+                                                  flex: 4,
+                                                  child: SizedBox(),
+                                                ),
+                                                Expanded(
+                                                  flex: 1,
+                                                  child: Text(
+                                                      '${viewList[index]["name"]} • ${viewList[index]["age"]}',
                                                       overflow:
                                                           TextOverflow.ellipsis,
-                                                      color: Colors.white,
-                                                      fontSize: 16,
-                                                    )),
-                                              ),
-                                            ],
+                                                      style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                ),
+                                                Expanded(
+                                                  flex: 1,
+                                                  child: Text(
+                                                      '${viewList[index]["city"]} • ${viewList[index]["country"]}',
+                                                      style: const TextStyle(
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        color: Colors.white,
+                                                        fontSize: 16,
+                                                      )),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              )),
-                            );
-                          }),
-                        )
-                      : Center(
-                          child: Lottie.asset(DImages.findnot),
-                        ),
+                                )),
+                              );
+                            }),
+                          )
+                        : Center(
+                            child: Lottie.asset(DImages.findnot),
+                          ),
                 ],
               ),
             )

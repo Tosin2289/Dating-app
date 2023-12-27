@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../../controllers/core/profile_controller.dart';
 import '../../../global.dart';
 import '../../utils/image.dart';
+import '../profile/user_details_screen.dart';
 
 class LikeSentLikeReceivedScreen extends StatefulWidget {
   const LikeSentLikeReceivedScreen({super.key});
@@ -15,6 +18,7 @@ class LikeSentLikeReceivedScreen extends StatefulWidget {
 
 class _LikeSentLikeReceivedScreenState
     extends State<LikeSentLikeReceivedScreen> {
+  ProfileController profileController = Get.put(ProfileController());
   bool isLikeSentClicked = true;
   List<String> likeSentList = [];
   List<String> likeReceviedList = [];
@@ -61,12 +65,27 @@ class _LikeSentLikeReceivedScreenState
     });
   }
 
+  String senderName = "";
+  readCurrentUserData() async {
+    await FirebaseFirestore.instance
+        .collection("Users")
+        .doc(currentUserId)
+        .get()
+        .then((value) {
+      setState(() {
+        senderName = value.data()!["name"].toString();
+      });
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     getLikeListKeys();
+    readCurrentUserData();
   }
 
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -95,6 +114,7 @@ class _LikeSentLikeReceivedScreenState
                       isLikeSentClicked = false;
                       getLikeListKeys();
                     }
+                    currentIndex = value;
                   });
                 },
                 indicator: BoxDecoration(
@@ -119,154 +139,165 @@ class _LikeSentLikeReceivedScreenState
             Expanded(
               child: TabBarView(
                 children: [
-                  likeList.isNotEmpty
-                      ? GridView.count(
-                          crossAxisCount: 2,
-                          padding: const EdgeInsets.all(2),
-                          children: List.generate(likeList.length, (index) {
-                            return ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: GridTile(
-                                  child: Padding(
-                                padding: const EdgeInsets.all(2),
-                                child: GestureDetector(
-                                  onTap: () {},
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Card(
-                                      color: Colors.grey.shade700,
-                                      child: DecoratedBox(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            image: DecorationImage(
-                                                image: NetworkImage(
-                                                    likeList[index]
-                                                        ["imageProfile"]),
-                                                fit: BoxFit.cover)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              const Expanded(
-                                                flex: 4,
-                                                child: SizedBox(),
-                                              ),
-                                              Expanded(
-                                                flex: 1,
-                                                child: Text(
-                                                    '${likeList[index]["name"]} • ${likeList[index]["age"]}',
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: const TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                              ),
-                                              Expanded(
-                                                flex: 1,
-                                                child: Text(
-                                                    '${likeList[index]["city"]} • ${likeList[index]["country"]}',
-                                                    style: const TextStyle(
+                  if (currentIndex == 0)
+                    likeList.isNotEmpty
+                        ? GridView.count(
+                            crossAxisCount: 2,
+                            padding: const EdgeInsets.all(2),
+                            children: List.generate(likeList.length, (index) {
+                              final eachProfileInfo =
+                                  profileController.usersProfileList[index];
+                              return ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: GridTile(
+                                    child: Padding(
+                                  padding: const EdgeInsets.all(2),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      profileController.viewSentAndViewReceived(
+                                          eachProfileInfo.uid.toString(),
+                                          senderName);
+                                      Get.to(UserDetailsScreen(
+                                        userId: eachProfileInfo.uid,
+                                      ));
+                                    },
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Card(
+                                        color: Colors.grey.shade700,
+                                        child: DecoratedBox(
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              image: DecorationImage(
+                                                  image: NetworkImage(
+                                                      likeList[index]
+                                                          ["imageProfile"]),
+                                                  fit: BoxFit.cover)),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const Expanded(
+                                                  flex: 4,
+                                                  child: SizedBox(),
+                                                ),
+                                                Expanded(
+                                                  flex: 1,
+                                                  child: Text(
+                                                      '${likeList[index]["name"]} • ${likeList[index]["age"]}',
                                                       overflow:
                                                           TextOverflow.ellipsis,
-                                                      color: Colors.white,
-                                                      fontSize: 16,
-                                                    )),
-                                              ),
-                                            ],
+                                                      style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                ),
+                                                Expanded(
+                                                  flex: 1,
+                                                  child: Text(
+                                                      '${likeList[index]["city"]} • ${likeList[index]["country"]}',
+                                                      style: const TextStyle(
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        color: Colors.white,
+                                                        fontSize: 16,
+                                                      )),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              )),
-                            );
-                          }),
-                        )
-                      : Center(
-                          child: Lottie.asset(DImages.findnot),
-                        ),
-                  likeList.isNotEmpty
-                      ? GridView.count(
-                          crossAxisCount: 2,
-                          padding: const EdgeInsets.all(2),
-                          children: List.generate(likeList.length, (index) {
-                            return ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: GridTile(
-                                  child: Padding(
-                                padding: const EdgeInsets.all(2),
-                                child: GestureDetector(
-                                  onTap: () {},
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Card(
-                                      color: Colors.grey.shade700,
-                                      child: DecoratedBox(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            image: DecorationImage(
-                                                image: NetworkImage(
-                                                    likeList[index]
-                                                        ["imageProfile"]),
-                                                fit: BoxFit.cover)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              const Expanded(
-                                                flex: 4,
-                                                child: SizedBox(),
-                                              ),
-                                              Expanded(
-                                                flex: 1,
-                                                child: Text(
-                                                    '${likeList[index]["name"]} • ${likeList[index]["age"]}',
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: const TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                              ),
-                                              Expanded(
-                                                flex: 1,
-                                                child: Text(
-                                                    '${likeList[index]["city"]} • ${likeList[index]["country"]}',
-                                                    style: const TextStyle(
+                                )),
+                              );
+                            }),
+                          )
+                        : Center(
+                            child: Lottie.asset(DImages.findnot),
+                          ),
+                  if (currentIndex == 1)
+                    likeList.isNotEmpty
+                        ? GridView.count(
+                            crossAxisCount: 2,
+                            padding: const EdgeInsets.all(2),
+                            children: List.generate(likeList.length, (index) {
+                              return ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: GridTile(
+                                    child: Padding(
+                                  padding: const EdgeInsets.all(2),
+                                  child: GestureDetector(
+                                    onTap: () {},
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Card(
+                                        color: Colors.grey.shade700,
+                                        child: DecoratedBox(
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              image: DecorationImage(
+                                                  image: NetworkImage(
+                                                      likeList[index]
+                                                          ["imageProfile"]),
+                                                  fit: BoxFit.cover)),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const Expanded(
+                                                  flex: 4,
+                                                  child: SizedBox(),
+                                                ),
+                                                Expanded(
+                                                  flex: 1,
+                                                  child: Text(
+                                                      '${likeList[index]["name"]} • ${likeList[index]["age"]}',
                                                       overflow:
                                                           TextOverflow.ellipsis,
-                                                      color: Colors.white,
-                                                      fontSize: 16,
-                                                    )),
-                                              ),
-                                            ],
+                                                      style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                ),
+                                                Expanded(
+                                                  flex: 1,
+                                                  child: Text(
+                                                      '${likeList[index]["city"]} • ${likeList[index]["country"]}',
+                                                      style: const TextStyle(
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        color: Colors.white,
+                                                        fontSize: 16,
+                                                      )),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              )),
-                            );
-                          }),
-                        )
-                      : Center(
-                          child: Lottie.asset(DImages.findnot),
-                        ),
+                                )),
+                              );
+                            }),
+                          )
+                        : Center(
+                            child: Lottie.asset(DImages.findnot),
+                          ),
                 ],
               ),
             )
