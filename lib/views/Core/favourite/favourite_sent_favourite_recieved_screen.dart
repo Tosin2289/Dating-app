@@ -150,74 +150,102 @@ class _FavouriteSentFavouriteReceivedScreenState
                                   profileController.usersProfileList[index];
                               return ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
-                                child: GridTile(
-                                    child: Padding(
-                                  padding: const EdgeInsets.all(2),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      profileController.viewSentAndViewReceived(
-                                          eachProfileInfo.uid.toString(),
-                                          senderName);
-                                      Get.to(UserDetailsScreen(
-                                        userId: eachProfileInfo.uid,
-                                      ));
-                                    },
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: Card(
-                                        color: Colors.grey.shade700,
-                                        child: DecoratedBox(
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              image: DecorationImage(
-                                                  image: NetworkImage(
-                                                      favoriteList[index]
-                                                          ["imageProfile"]),
-                                                  fit: BoxFit.cover)),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                const Expanded(
-                                                  flex: 4,
-                                                  child: SizedBox(),
+                                child: Stack(
+                                  children: [
+                                    GridTile(
+                                        child: Padding(
+                                      padding: const EdgeInsets.all(2),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          profileController
+                                              .viewSentAndViewReceived(
+                                                  eachProfileInfo.uid
+                                                      .toString(),
+                                                  senderName);
+                                          Get.to(UserDetailsScreen(
+                                            userId: eachProfileInfo.uid,
+                                          ));
+                                        },
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          child: Card(
+                                            color: Colors.grey.shade700,
+                                            child: DecoratedBox(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  image: DecorationImage(
+                                                      image: NetworkImage(
+                                                          favoriteList[index]
+                                                              ["imageProfile"]),
+                                                      fit: BoxFit.cover)),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    const Expanded(
+                                                      flex: 4,
+                                                      child: SizedBox(),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: Text(
+                                                          '${favoriteList[index]["name"]} • ${favoriteList[index]["age"]}',
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: const TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: Text(
+                                                          '${favoriteList[index]["city"]} • ${favoriteList[index]["country"]}',
+                                                          style:
+                                                              const TextStyle(
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            color: Colors.white,
+                                                            fontSize: 16,
+                                                          )),
+                                                    ),
+                                                  ],
                                                 ),
-                                                Expanded(
-                                                  flex: 1,
-                                                  child: Text(
-                                                      '${favoriteList[index]["name"]} • ${favoriteList[index]["age"]}',
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style: const TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 16,
-                                                          fontWeight:
-                                                              FontWeight.bold)),
-                                                ),
-                                                Expanded(
-                                                  flex: 1,
-                                                  child: Text(
-                                                      '${favoriteList[index]["city"]} • ${favoriteList[index]["country"]}',
-                                                      style: const TextStyle(
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        color: Colors.white,
-                                                        fontSize: 16,
-                                                      )),
-                                                ),
-                                              ],
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
+                                    )),
+                                    Positioned(
+                                      top: 5,
+                                      right: 18,
+                                      child: IconButton(
+                                          onPressed: () {
+                                            profileController
+                                                .favoriteSentAndFavouriteReceived(
+                                                    eachProfileInfo.uid
+                                                        .toString(),
+                                                    senderName);
+                                          },
+                                          icon: const Icon(
+                                            Icons.cancel,
+                                            color: Colors.red,
+                                          )),
                                     ),
-                                  ),
-                                )),
+                                  ],
+                                ),
                               );
                             }),
                           )
