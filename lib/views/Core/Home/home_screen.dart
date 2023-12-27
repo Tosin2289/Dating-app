@@ -4,6 +4,7 @@ import 'package:dating_app/views/Core/swipe/swipe_screen.dart';
 import 'package:dating_app/views/Core/views/view_sent_view_received_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 
 import '../favourite/favourite_sent_favourite_recieved_screen.dart';
 
@@ -40,11 +41,11 @@ class _HomeScreenState extends State<HomeScreen> {
         unselectedItemColor: Colors.grey.shade600,
         currentIndex: screenIndex,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.remove_red_eye), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.star), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
+          BottomNavigationBarItem(icon: Icon(Iconsax.home), label: ''),
+          BottomNavigationBarItem(icon: Icon(Iconsax.eye), label: ''),
+          BottomNavigationBarItem(icon: Icon(Iconsax.star), label: ''),
+          BottomNavigationBarItem(icon: Icon(Iconsax.like), label: ''),
+          BottomNavigationBarItem(icon: Icon(Iconsax.user), label: ''),
         ],
       ),
       body: screens[screenIndex],
