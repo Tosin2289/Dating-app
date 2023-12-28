@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/models/person.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../global.dart';
+import '../../views/utils/image.dart';
 
 class ProfileController extends GetxController {
   static ProfileController get instance => Get.find();
@@ -170,5 +172,35 @@ class ProfileController extends GetxController {
           .set({});
     }
     update();
+  }
+
+  triggerNotification(String message, int id) {
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+            backgroundColor: Colors.pink,
+            color: Colors.white,
+            id: id,
+            channelKey: 'Basic_channel',
+            title: 'Dating App',
+            body: message));
+  }
+
+  createScheduledNotification() {
+    AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: 10,
+        channelKey: 'basic_channel',
+        title: 'Dating app',
+        body: 'Check Dating app for interesting matches',
+      ),
+      schedule: NotificationCalendar.fromDate(
+        date: DateTime.now().add(
+          const Duration(seconds: 10),
+        ),
+        preciseAlarm: true,
+        allowWhileIdle: true,
+        repeats: true,
+      ),
+    );
   }
 }

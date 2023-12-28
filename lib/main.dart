@@ -1,4 +1,6 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:dating_app/controllers/auth/authentication_controller.dart.dart';
+import 'package:dating_app/views/utils/image.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,6 +10,25 @@ import 'views/authentication/login/login_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  AwesomeNotifications().initialize(
+    null,
+    [
+      NotificationChannel(
+        channelKey: 'Basic_channel',
+        channelName: 'Basic notifications',
+        channelDescription: 'Notification channel for sending alerts',
+        defaultColor: Colors.pink,
+        importance: NotificationImportance.Max,
+        defaultPrivacy: NotificationPrivacy.Public,
+        defaultRingtoneType: DefaultRingtoneType.Notification,
+        enableVibration: true,
+        channelShowBadge: true,
+        enableLights: true,
+        ledColor: Colors.white,
+      ),
+    ],
+    debug: true,
+  );
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   ).then((value) {

@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:dating_app/views/Core/likes/like_sent_liked_received_screen.dart';
 import 'package:dating_app/views/Core/profile/user_details_screen.dart';
 import 'package:dating_app/views/Core/swipe/swipe_screen.dart';
@@ -26,6 +27,16 @@ class _HomeScreenState extends State<HomeScreen> {
       userId: FirebaseAuth.instance.currentUser!.uid,
     ),
   ];
+  @override
+  void initState() {
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

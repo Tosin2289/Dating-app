@@ -34,6 +34,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
   void initState() {
     readCurrentUserData();
     super.initState();
+    profileController.createScheduledNotification();
   }
 
   @override
