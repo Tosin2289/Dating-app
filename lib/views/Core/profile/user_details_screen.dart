@@ -11,6 +11,7 @@ import '../../../global.dart';
 import '../../personalisation/account_settings_screen.dart';
 import '../../utils/subheading_text.dart';
 import '../../utils/text_tile.dart';
+import 'full_screen_image.dart';
 
 class UserDetailsScreen extends StatefulWidget {
   String? userId;
@@ -36,6 +37,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
     return Scaffold(
         appBar: AppBar(
             centerTitle: true,
+            backgroundColor: Colors.transparent,
             automaticallyImplyLeading:
                 widget.userId == currentUserId ? false : true,
             actions: [
@@ -78,26 +80,51 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                           showText: false,
                           items: [
                             CarouselItem(
+                              onImageTap: (e) {
+                                Get.to(FullScreenImage(
+                                  e: userDetailsController.urlImage1.value,
+                                ));
+                              },
                               image: NetworkImage(
                                 userDetailsController.urlImage1.value,
                               ),
                             ),
                             CarouselItem(
+                              onImageTap: (e) {
+                                Get.to(FullScreenImage(
+                                  e: userDetailsController.urlImage2.value,
+                                ));
+                              },
                               image: NetworkImage(
                                 userDetailsController.urlImage2.value,
                               ),
                             ),
                             CarouselItem(
+                              onImageTap: (e) {
+                                Get.to(FullScreenImage(
+                                  e: userDetailsController.urlImage3.value,
+                                ));
+                              },
                               image: NetworkImage(
                                 userDetailsController.urlImage3.value,
                               ),
                             ),
                             CarouselItem(
+                              onImageTap: (e) {
+                                Get.to(FullScreenImage(
+                                  e: userDetailsController.urlImage4.value,
+                                ));
+                              },
                               image: NetworkImage(
                                 userDetailsController.urlImage4.value,
                               ),
                             ),
                             CarouselItem(
+                              onImageTap: (e) {
+                                Get.to(FullScreenImage(
+                                  e: userDetailsController.urlImage5.value,
+                                ));
+                              },
                               image: NetworkImage(
                                 userDetailsController.urlImage5.value,
                               ),
