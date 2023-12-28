@@ -164,6 +164,14 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                           ),
                           TextTile(
                             userDetailsController:
+                                userDetailsController.gender.value,
+                            title: "Gender :",
+                          ),
+                          const SizedBox(
+                            height: 3,
+                          ),
+                          TextTile(
+                            userDetailsController:
                                 userDetailsController.phoneNo.value,
                             title: "Phone number :",
                           ),

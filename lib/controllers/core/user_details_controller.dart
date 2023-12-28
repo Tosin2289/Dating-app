@@ -6,6 +6,7 @@ class UserDetailsController extends GetxController {
 
   Rx<String> name = ''.obs;
   Rx<String> age = ''.obs;
+  Rx<String> gender = ''.obs;
   Rx<String> phoneNo = ''.obs;
   Rx<String> city = ''.obs;
   Rx<String> country = ''.obs;
@@ -63,6 +64,7 @@ class UserDetailsController extends GetxController {
         }
         name.value = snapshot.data()!['name'];
         age.value = snapshot.data()!['age'].toString();
+        gender.value = snapshot.data()!['gender'];
         phoneNo.value = snapshot.data()!['phoneNo'];
         city.value = snapshot.data()!['city'];
         country.value = snapshot.data()!['country'];

@@ -8,6 +8,7 @@ class Person {
   String? password;
   String? name;
   int? age;
+  String? gender;
   String? phoneNo;
   String? city;
   String? country;
@@ -45,6 +46,7 @@ class Person {
     this.password,
     this.name,
     this.age,
+    this.gender,
     this.phoneNo,
     this.city,
     this.country,
@@ -79,6 +81,7 @@ class Person {
       'password': password,
       'name': name,
       'age': age,
+      'gender': gender,
       'phoneNo': phoneNo,
       'city': city,
       'country': country,
@@ -116,6 +119,7 @@ class Person {
       password: map['password'],
       name: map['name'],
       age: map['age'] ?? 0,
+      gender: map['gender'],
       phoneNo: map['phoneNo'],
       city: map['city'],
       country: map['country'],

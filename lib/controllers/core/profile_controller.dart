@@ -191,7 +191,7 @@ class ProfileController extends GetxController {
         id: 10,
         channelKey: 'basic_channel',
         title: 'Dating app',
-        body: 'Check Dating app for interesting matches',
+        body: 'Check Dating app for intresting matches',
       ),
       schedule: NotificationCalendar.fromDate(
         date: DateTime.now().add(

@@ -20,6 +20,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController ageController = TextEditingController();
+  TextEditingController genderController = TextEditingController();
   TextEditingController phonenumberController = TextEditingController();
   TextEditingController cityController = TextEditingController();
   TextEditingController countryController = TextEditingController();
@@ -173,6 +174,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 controller: ageController,
                 labelText: 'Age',
                 iconData: Icons.numbers,
+                isObscured: false,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              CustomTextField(
+                controller: genderController,
+                labelText: 'Gender(Male or Female)',
+                iconData: Icons.female,
                 isObscured: false,
               ),
               const SizedBox(
@@ -453,6 +463,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           emailController.text.trim().isNotEmpty &&
                           passwordController.text.trim().isNotEmpty &&
                           ageController.text.trim().isNotEmpty &&
+                          genderController.text.trim().isNotEmpty &&
                           phonenumberController.text.trim().isNotEmpty &&
                           cityController.text.trim().isNotEmpty &&
                           countryController.text.trim().isNotEmpty &&
@@ -490,6 +501,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             passwordController.text.trim(),
                             nameController.text.trim(),
                             ageController.text.trim(),
+                            genderController.text.trim(),
                             phonenumberController.text.trim(),
                             cityController.text.trim(),
                             countryController.text.trim(),

@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../authentication/widgets/text_field_widgets.dart';
@@ -51,6 +52,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   ///Personal info
   TextEditingController nameController = TextEditingController();
   TextEditingController ageController = TextEditingController();
+  TextEditingController genderController = TextEditingController();
   TextEditingController phonenumberController = TextEditingController();
   TextEditingController cityController = TextEditingController();
   TextEditingController countryController = TextEditingController();
@@ -84,6 +86,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   //Personal info
   String name = '';
   String age = '';
+  String gender = '';
   String phoneNo = '';
   String city = '';
   String country = '';
@@ -127,6 +130,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
             nameController.text = name;
             age = value.data()!['age'].toString();
             ageController.text = age;
+            gender = value.data()!['gender'];
+            genderController.text = gender;
             phoneNo = value.data()!['phoneNo'];
             phonenumberController.text = phoneNo;
             city = value.data()!['city'];
@@ -186,6 +191,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   updateUserDataToFirebaseFirestoreDatabase(
     String name,
     String age,
+    String gender,
     String phoneNo,
     String city,
     String country,
@@ -346,6 +352,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       controller: ageController,
                       labelText: 'Age',
                       iconData: Icons.numbers,
+                      isObscured: false,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    CustomTextField(
+                      controller: genderController,
+                      labelText: 'Gender(Male or Female)',
+                      iconData: Icons.female,
                       isObscured: false,
                     ),
                     const SizedBox(
@@ -624,6 +639,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         onPressed: () async {
                           if (nameController.text.trim().isNotEmpty &&
                               ageController.text.trim().isNotEmpty &&
+                              genderController.text.trim().isNotEmpty &&
                               phonenumberController.text.trim().isNotEmpty &&
                               cityController.text.trim().isNotEmpty &&
                               countryController.text.trim().isNotEmpty &&
@@ -660,6 +676,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 ? await updateUserDataToFirebaseFirestoreDatabase(
                                     nameController.text.trim(),
                                     ageController.text.trim(),
+                                    genderController.text.trim(),
                                     phonenumberController.text.trim(),
                                     cityController.text.trim(),
                                     countryController.text.trim(),

@@ -37,6 +37,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
     profileController.createScheduledNotification();
   }
 
+  String dropdownValue = 'All';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,12 +46,21 @@ class _SwippingScreenState extends State<SwippingScreen> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           actions: [
-            IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.filter_list,
-                  color: Colors.white,
-                )),
+            DropdownButton<String>(
+              icon: const Icon(Icons.filter_list),
+              items: ['All', 'Female', 'Male']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              onChanged: (String? newvalue) {
+                setState(() {
+                  dropdownValue = newvalue!;
+                });
+              },
+            ),
           ],
         ),
         body: Obx(
