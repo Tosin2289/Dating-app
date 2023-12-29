@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../global.dart';
 import '../../views/utils/image.dart';
@@ -13,12 +14,21 @@ class ProfileController extends GetxController {
   static ProfileController get instance => Get.find();
 
   final RxList<Person> usersProfileList = <Person>[].obs;
-  List<Person> get allUserProfileList => usersProfileList.value;
+  final RxList<Person> usersProfileMaleList = <Person>[].obs;
+  final RxList<Person> usersProfileFemaleList = <Person>[].obs;
+
   @override
   void onInit() {
     super.onInit();
-
-    getAllProfileList();
+    getMaleProfileList().then((value) {
+      print("Male  List :${usersProfileMaleList.length}");
+    });
+    getAllProfileList().then((value) {
+      print("All List :${usersProfileList.length}");
+    });
+    getFemaleProfileList().then((value) {
+      print("Female List :${usersProfileFemaleList.length}");
+    });
   }
 
   Future<void> getAllProfileList() async {
@@ -32,6 +42,56 @@ class ProfileController extends GetxController {
           .map((queryDataSnapshot) => Person.fromMap(queryDataSnapshot));
       usersProfileList.assignAll(list);
       usersProfileList.shuffle();
+    } on FirebaseException catch (e) {
+      throw e.code;
+    } on FormatException catch (e) {
+      throw e.message;
+    } on PlatformException catch (e) {
+      throw e.code;
+    } catch (e) {
+      throw 'Something went wrong.Please try again';
+    }
+  }
+
+  Future<void> getFemaleProfileList() async {
+    try {
+      final snapshot = await FirebaseFirestore.instance
+          .collection('Users')
+          .where(
+            "gender",
+            isEqualTo: "Female",
+          )
+          .get();
+
+      final list = snapshot.docs
+          .map((queryDataSnapshot) => Person.fromMap(queryDataSnapshot));
+      usersProfileFemaleList.assignAll(list);
+      usersProfileFemaleList.shuffle();
+    } on FirebaseException catch (e) {
+      throw e.code;
+    } on FormatException catch (e) {
+      throw e.message;
+    } on PlatformException catch (e) {
+      throw e.code;
+    } catch (e) {
+      throw 'Something went wrong.Please try again';
+    }
+  }
+
+  Future<void> getMaleProfileList() async {
+    try {
+      final snapshot = await FirebaseFirestore.instance
+          .collection('Users')
+          .where(
+            "gender",
+            isEqualTo: "Male",
+          )
+          .get();
+
+      final list = snapshot.docs
+          .map((queryDataSnapshot) => Person.fromMap(queryDataSnapshot));
+      usersProfileMaleList.assignAll(list);
+      usersProfileMaleList.shuffle();
     } on FirebaseException catch (e) {
       throw e.code;
     } on FormatException catch (e) {
@@ -172,6 +232,22 @@ class ProfileController extends GetxController {
           .set({});
     }
     update();
+  }
+
+  Future lunchurl(String url, BuildContext context) async {
+    // ignore:
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      // ignore: use_build_context_synchronously
+      showDialog(
+          context: context,
+          builder: ((context) {
+            return const AlertDialog(
+              content: Text('Unable to load'),
+            );
+          }));
+    }
   }
 
   triggerNotification(String message, int id) {
