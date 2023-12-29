@@ -126,7 +126,7 @@ class AuthenticationController extends GetxController {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      Get.snackbar("Oh Snap", "Logged in succesfully",
+      Get.snackbar("Hurry", "Logged in succesfully",
           backgroundColor: Colors.pink, colorText: Colors.white);
       Get.to(const HomeScreen());
     } on FirebaseAuthException catch (e) {

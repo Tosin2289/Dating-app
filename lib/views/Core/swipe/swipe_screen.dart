@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../controllers/core/profile_controller.dart';
 import '../../../global.dart';
@@ -40,15 +41,6 @@ class _SwippingScreenState extends State<SwippingScreen> {
   String dropdownValue = 'All';
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      if (dropdownValue == "Male") {
-        profileController.getMaleProfileList();
-      } else if (dropdownValue == "Female") {
-        profileController.getFemaleProfileList();
-      } else {
-        profileController.getAllProfileList();
-      }
-    });
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -95,7 +87,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
             return profileController.usersProfileMaleList.isNotEmpty
                 ? CardSwiper(
                     cardsCount: profileController.usersProfileMaleList.length,
-                    numberOfCardsDisplayed: 3,
+                    numberOfCardsDisplayed: 1,
                     backCardOffset: const Offset(40, 40),
                     padding: const EdgeInsets.all(24.0),
                     cardBuilder: (context, index, x, y) {
@@ -308,7 +300,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
             return profileController.usersProfileFemaleList.isNotEmpty
                 ? CardSwiper(
                     cardsCount: profileController.usersProfileFemaleList.length,
-                    numberOfCardsDisplayed: 3,
+                    numberOfCardsDisplayed: 1,
                     backCardOffset: const Offset(40, 40),
                     padding: const EdgeInsets.all(24.0),
                     cardBuilder: (context, index, x, y) {
@@ -700,12 +692,24 @@ class _SwippingScreenState extends State<SwippingScreen> {
                                           width: 40),
                                     ),
                                     GestureDetector(
-                                      onTap: () {
-                                        profileController.lunchurl(
-                                            Uri.parse(
-                                                    "https://wa.me/${eachProfileInfo.phoneNo}")
-                                                as String,
-                                            context);
+                                      onTap: () async {
+                                        if (await canLaunch(Uri.parse(
+                                                "https://wa.me/${eachProfileInfo.phoneNo}")
+                                            as String)) {
+                                          await launch(Uri.parse(
+                                                  "https://wa.me/${eachProfileInfo.phoneNo}")
+                                              as String);
+                                        } else {
+                                          // ignore: use_build_context_synchronously
+                                          showDialog(
+                                              context: context,
+                                              builder: ((context) {
+                                                return const AlertDialog(
+                                                  content:
+                                                      Text('Unable to load'),
+                                                );
+                                              }));
+                                        }
                                       },
                                       child: Image.asset("assets/chat.png",
                                           width: 60),
