@@ -19,63 +19,22 @@ class ProfileController extends GetxController {
 
   @override
   void onInit() {
-    super.onInit();
     getMaleProfileList().then((value) {
-      print("Male  List :${usersProfileMaleList.length}");
-    });
-    getAllProfileList().then((value) {
-      print("All List :${usersProfileList.length}");
+      print("Male Profile list: ${usersProfileMaleList.length}");
+      for (var i in usersProfileMaleList) {
+        usersProfileList.add(i);
+      }
+      print("Profile list: ${usersProfileList.length}");
     });
     getFemaleProfileList().then((value) {
-      print("Female List :${usersProfileFemaleList.length}");
+      print("Female Profile list: ${usersProfileFemaleList.length}");
+      for (var i in usersProfileFemaleList) {
+        usersProfileList.add(i);
+      }
+      print("Profile list: ${usersProfileList.length}");
     });
-  }
-
-  Future<void> getAllProfileList() async {
-    try {
-      final snapshot = await FirebaseFirestore.instance
-          .collection('Users')
-          .where("uid", isNotEqualTo: FirebaseAuth.instance.currentUser!.uid)
-          .get();
-
-      final list = snapshot.docs
-          .map((queryDataSnapshot) => Person.fromMap(queryDataSnapshot));
-      usersProfileList.assignAll(list);
-      usersProfileList.shuffle();
-    } on FirebaseException catch (e) {
-      throw e.code;
-    } on FormatException catch (e) {
-      throw e.message;
-    } on PlatformException catch (e) {
-      throw e.code;
-    } catch (e) {
-      throw 'Something went wrong.Please try again';
-    }
-  }
-
-  Future<void> getFemaleProfileList() async {
-    try {
-      final snapshot = await FirebaseFirestore.instance
-          .collection('Users')
-          .where(
-            "gender",
-            isEqualTo: "Female",
-          )
-          .get();
-
-      final list = snapshot.docs
-          .map((queryDataSnapshot) => Person.fromMap(queryDataSnapshot));
-      usersProfileFemaleList.assignAll(list);
-      usersProfileFemaleList.shuffle();
-    } on FirebaseException catch (e) {
-      throw e.code;
-    } on FormatException catch (e) {
-      throw e.message;
-    } on PlatformException catch (e) {
-      throw e.code;
-    } catch (e) {
-      throw 'Something went wrong.Please try again';
-    }
+    usersProfileList.shuffle();
+    super.onInit();
   }
 
   Future<void> getMaleProfileList() async {
@@ -92,6 +51,57 @@ class ProfileController extends GetxController {
           .map((queryDataSnapshot) => Person.fromMap(queryDataSnapshot));
       usersProfileMaleList.assignAll(list);
       usersProfileMaleList.shuffle();
+    } on FirebaseException catch (e) {
+      throw e.code;
+    } on FormatException catch (e) {
+      throw e.message;
+    } on PlatformException catch (e) {
+      throw e.code;
+    } catch (e) {
+      print('Male  list error $e');
+    }
+  }
+
+  // Future<void> getAllProfileList() async {
+  //   try {
+  //     final snapshot = await FirebaseFirestore.instance
+  //         .collection('Users')
+  //         .where(
+  //           "uid",
+  //           isNotEqualTo: FirebaseAuth.instance.currentUser!.uid,
+  //         )
+  //         .get();
+
+  //     final list = snapshot.docs
+  //         .map((queryDataSnapshot) => Person.fromMap(queryDataSnapshot));
+  //     usersProfileList.assignAll(list);
+
+  //     usersProfileList.shuffle();
+  //   } on FirebaseException catch (e) {
+  //     throw e.code;
+  //   } on FormatException catch (e) {
+  //     throw e.message;
+  //   } on PlatformException catch (e) {
+  //     throw e.code;
+  //   } catch (e) {
+  //     print('profile list error $e');
+  //   }
+  // }
+
+  Future<void> getFemaleProfileList() async {
+    try {
+      final snapshot = await FirebaseFirestore.instance
+          .collection('Users')
+          .where(
+            "gender",
+            isEqualTo: "Female",
+          )
+          .get();
+
+      final list = snapshot.docs
+          .map((queryDataSnapshot) => Person.fromMap(queryDataSnapshot));
+      usersProfileFemaleList.assignAll(list);
+      usersProfileFemaleList.shuffle();
     } on FirebaseException catch (e) {
       throw e.code;
     } on FormatException catch (e) {
@@ -248,35 +258,5 @@ class ProfileController extends GetxController {
             );
           }));
     }
-  }
-
-  triggerNotification(String message, int id) {
-    AwesomeNotifications().createNotification(
-        content: NotificationContent(
-            backgroundColor: Colors.pink,
-            color: Colors.white,
-            id: id,
-            channelKey: 'Basic_channel',
-            title: 'Dating App',
-            body: message));
-  }
-
-  createScheduledNotification() {
-    AwesomeNotifications().createNotification(
-      content: NotificationContent(
-        id: 10,
-        channelKey: 'basic_channel',
-        title: 'Dating app',
-        body: 'Check Dating app for intresting matches',
-      ),
-      schedule: NotificationCalendar.fromDate(
-        date: DateTime.now().add(
-          const Duration(seconds: 10),
-        ),
-        preciseAlarm: true,
-        allowWhileIdle: true,
-        repeats: true,
-      ),
-    );
   }
 }

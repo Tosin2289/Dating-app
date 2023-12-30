@@ -53,6 +53,7 @@ dependencies:
   lottie: ^2.3.2
   url_launcher: ^6.1.11
   http: ^0.13.6
+  cached_network_image: ^3.2.3
 
 
 dev_dependencies:
